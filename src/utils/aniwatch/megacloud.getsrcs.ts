@@ -18,7 +18,7 @@ let arr = new Array(128).fill(void 0);
 let dateNow = Date.now();
 let content: string = "";
 
-function isDetached(buffer: ArrayBuffer): boolean {
+function isDetached(buffer: ArrayBufferLike): boolean {
   if (buffer.byteLength === 0) {
     const formatted = util.format(buffer);
     return formatted.includes("detached");
@@ -135,8 +135,9 @@ const encode = function (text: string, array: Uint8Array) {
 };
 
 function parse(text: string, func: Function, func2: Function) {
+  let encoded: Uint8Array<ArrayBufferLike>;
   if (void 0 === func2) {
-    var encoded = encoder.encode(text);
+    encoded = encoder.encode(text);
     const parsedIndex = func(encoded.length, 1) >>> 0;
     return (
       getMemBuff()
